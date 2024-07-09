@@ -8,8 +8,6 @@
         "start": "node server.js"
     },
     "keywords": [],
-    "author": "Adriano Cangiamila",
-    "license": "ISC",
     "dependencies": {
         "@chrisoakman/chessboardjs": "^1.0.0",
         "chess.js": "^0.11.0",
