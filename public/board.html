@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chess Game</title>
+        <link rel="stylesheet" href="./css/chessboard-1.0.0.min.css" />
+        <link rel="stylesheet" href="./css/styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+            integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <div class="container">
+            <div class="grid">
+                <div class="sidebar box">
+                    <img src="" alt="pawn" />
+                    <div id="turn"></div>
+                    <div class="sidebar-buttons">
+                        <button id="undo-button">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button id="draw-button">&#189;</button>
+                        <button id="leave-button">
+                            <i class="fas fa-handshake"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal box"></div>
+                <div id="board"></div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="./js/chessboard-1.0.0.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="./js/boardConfig.js"></script>
+        <script src="./js/index.js"></script>
+    </body>
+</html>

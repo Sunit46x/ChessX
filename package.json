@@ -1,0 +1,22 @@
+{
+    "name": "chessgame",
+    "version": "1.0.0",
+    "description": "Chess Game",
+    "main": "server.js",
+    "scripts": {
+        "dev": "nodemon server.js",
+        "start": "node server.js"
+    },
+    "keywords": [],
+    "author": "Adriano Cangiamila",
+    "license": "ISC",
+    "dependencies": {
+        "@chrisoakman/chessboardjs": "^1.0.0",
+        "chess.js": "^0.11.0",
+        "express": "^4.17.1",
+        "socket.io": "^3.1.2"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    }
+}

@@ -1,0 +1,227 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #edeff1;
+  color: #414a4c;
+}
+
+button {
+  background-color: #6da6c5;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  color: #edeff1;
+  outline: none;
+  font-size: 1.25rem;
+}
+
+.container {
+  max-width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media only screen and (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+.flex-col-center {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.menu {
+  height: calc(100vh - 30px);
+  margin: 15px 0;
+}
+
+.box {
+  background-color: white;
+  -webkit-box-shadow: 2px 2px 3px rgba(128, 128, 128, 0.4);
+          box-shadow: 2px 2px 3px rgba(128, 128, 128, 0.4);
+  border-radius: 5px;
+}
+
+#practice-button,
+#play-button {
+  border-radius: 15px;
+  width: 250px;
+  margin-bottom: 50px;
+  font-size: 1.25rem;
+}
+
+@media only screen and (min-width: 768px) {
+  #practice-button,
+  #play-button {
+    width: 400px;
+  }
+}
+
+.grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: column-reverse;
+          flex-direction: column-reverse;
+  gap: 25px;
+  margin-top: 25px;
+  font-size: 1.5rem;
+      grid-template-areas: "sidebar board" "modal board";
+}
+
+@media only screen and (min-width: 992px) {
+  .grid {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 1fr 2fr;
+        grid-template-columns: 1fr 2fr;
+    grid-auto-rows: minmax(auto, 250px);
+  }
+}
+
+.sidebar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: sidebar;
+}
+
+@media only screen and (max-width: 992px) {
+  .sidebar p,
+  .sidebar a {
+    margin: 10px 0;
+  }
+}
+
+.sidebar-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  width: 100%;
+}
+
+.sidebar-buttons button {
+  margin: 15px 0;
+  width: 80px;
+  height: 40px;
+}
+
+@media only screen and (max-width: 576px) {
+  .sidebar-buttons button {
+    width: 50px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .sidebar img,
+  #turn {
+    display: none;
+  }
+}
+
+#board {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 2;
+  -ms-grid-column: 2;
+  grid-area: board;
+}
+
+.modal {
+  background-color: white;
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 15px;
+  padding: 15px;
+  text-align: center;
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: modal;
+}
+
+.highlight-target {
+  -webkit-box-shadow: inset 0 0 3px 3px yellow;
+          box-shadow: inset 0 0 3px 3px yellow;
+}
+
+.highlight-source {
+  -webkit-box-shadow: inset 0 0 3px 3px yellow;
+          box-shadow: inset 0 0 3px 3px yellow;
+  opacity: 0.5;
+}
+
+.highlight-target {
+  -webkit-box-shadow: inset 0 0 3px 3px yellow;
+          box-shadow: inset 0 0 3px 3px yellow;
+}
+
+.highlight-source {
+  -webkit-box-shadow: inset 0 0 3px 3px yellow;
+          box-shadow: inset 0 0 3px 3px yellow;
+  opacity: 0.5;
+}
+/*# sourceMappingURL=styles.css.map */

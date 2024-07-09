@@ -1,0 +1,148 @@
+:root {
+    --light-blue: #6da6c5;
+    --white: #edeff1;
+    --black: #414a4c;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: var(--white);
+    color: var(--black);
+}
+
+main {
+    background-color: var(--white);
+    height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    border: none;
+    padding: 5px 15px;
+    margin: 15px 0;
+    color: var(--white);
+    font-size: 1.4rem;
+    border-radius: 5px;
+    background-color: var(--light-blue);
+    cursor: pointer;
+}
+
+#practice-button,
+#play-button {
+    width: 400px;
+}
+
+a {
+    margin: 15px;
+}
+
+.box {
+    box-shadow: 2px 2px 5px rgba(128, 128, 128, 0.4);
+    border-radius: 5px;
+}
+
+#sidebar {
+    background-color: white;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    grid-area: sidebar;
+}
+
+#board {
+    grid-area: board;
+}
+
+.sidebar-buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 5px;
+    width: 100%;
+    grid-area: buttons;
+}
+
+.sidebar-buttons button {
+    width: 100%;
+    height: 44px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-auto-rows: minmax(auto, 250px);
+    grid-template-areas:
+        "sidebar board"
+        "modal board";
+    gap: 15px;
+    max-width: 1280px;
+    margin: 30px auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 1.5em;
+}
+
+.modal {
+    background-color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    text-align: center;
+    grid-area: modal;
+}
+
+.highlight-target {
+    -webkit-box-shadow: inset 0 0 3px 3px yellow;
+    -moz-box-shadow: inset 0 0 3px 3px yellow;
+    box-shadow: inset 0 0 3px 3px yellow;
+}
+
+.highlight-source {
+    -webkit-box-shadow: inset 0 0 3px 3px yellow;
+    -moz-box-shadow: inset 0 0 3px 3px yellow;
+    box-shadow: inset 0 0 3px 3px yellow;
+    opacity: 0.5;
+}
+
+.highlight-target {
+    -webkit-box-shadow: inset 0 0 3px 3px yellow;
+    -moz-box-shadow: inset 0 0 3px 3px yellow;
+    box-shadow: inset 0 0 3px 3px yellow;
+}
+
+.highlight-source {
+    -webkit-box-shadow: inset 0 0 3px 3px yellow;
+    -moz-box-shadow: inset 0 0 3px 3px yellow;
+    box-shadow: inset 0 0 3px 3px yellow;
+    opacity: 0.5;
+}
+
+@media (max-width: 900px) {
+    .container {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    #sidebar img,
+    #turn {
+        display: none;
+    }
+
+    #sidebar {
+        background-color: var(--white);
+        box-shadow: none;
+    }
+}
