@@ -15,22 +15,90 @@
     </head>
     <body>
         <div class="container">
-            <div class="grid">
-                <div class="sidebar box">
-                    <img src="" alt="pawn" />
-                    <div id="turn"></div>
-                    <div class="sidebar-buttons">
-                        <button id="undo-button">
-                            <i class="fas fa-undo"></i>
-                        </button>
-                        <button id="draw-button">&#189;</button>
-                        <button id="leave-button">
-                            <i class="fas fa-handshake"></i>
-                        </button>
+            <div class="main-grid">
+                <!-- Left Panel: Controls & Info -->
+                <div class="left-panel">
+                    <div class="sidebar box">
+                        <img src="" alt="pawn" />
+                        <div id="turn"></div>
+                        <div class="sidebar-buttons">
+                            <button id="undo-button" title="Request Undo">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button id="draw-button" title="Offer Draw">&#189;</button>
+                            <button id="leave-button" title="Surrender">
+                                <i class="fas fa-flag"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Spectator Badge -->
+                    <div id="spectator-badge" class="box spectator-badge" style="display: none;">
+                        <i class="fas fa-eye"></i>
+                        <span>Spectator Mode</span>
+                    </div>
+                    
+                    <!-- Spectator Count -->
+                    <div id="spectator-count" class="box spectator-count">
+                        <i class="fas fa-users"></i>
+                        <span id="spectator-num">0</span> watching
+                    </div>
+                    
+                    <div class="modal box"></div>
+                </div>
+                
+                <!-- Center: Board with Timers -->
+                <div class="center-panel">
+                    <!-- Opponent Timer (Top) -->
+                    <div class="timer-container timer-top">
+                        <div id="timer-opponent" class="timer box">
+                            <i class="fas fa-clock"></i>
+                            <span class="timer-display">10:00</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Chess Board -->
+                    <div id="board"></div>
+                    
+                    <!-- Player Timer (Bottom) -->
+                    <div class="timer-container timer-bottom">
+                        <div id="timer-player" class="timer box">
+                            <i class="fas fa-clock"></i>
+                            <span class="timer-display">10:00</span>
+                        </div>
                     </div>
                 </div>
-                <div class="modal box"></div>
-                <div id="board"></div>
+                
+                <!-- Right Panel: Move History -->
+                <div class="right-panel">
+                    <div class="move-history-container box">
+                        <div class="move-history-header">
+                            <h3><i class="fas fa-list"></i> Move History</h3>
+                            <button id="copy-pgn" title="Copy PGN">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div id="move-history" class="move-history">
+                            <!-- Moves will be populated here -->
+                        </div>
+                        
+                        <!-- Replay Controls -->
+                        <div class="replay-controls">
+                            <button id="replay-start" title="Go to start">
+                                <i class="fas fa-fast-backward"></i>
+                            </button>
+                            <button id="replay-prev" title="Previous move">
+                                <i class="fas fa-step-backward"></i>
+                            </button>
+                            <button id="replay-next" title="Next move">
+                                <i class="fas fa-step-forward"></i>
+                            </button>
+                            <button id="replay-end" title="Go to current">
+                                <i class="fas fa-fast-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
