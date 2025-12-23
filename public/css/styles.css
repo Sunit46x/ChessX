@@ -512,19 +512,58 @@ body.modal-open::before {
     margin: 20px 0;
 }
 
+.menu-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.menu-title i {
+    color: var(--accent-blue);
+}
+
+.menu-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
 #practice-button,
-#play-button {
+#play-button,
+#computer-button {
     border-radius: 12px;
     width: 280px;
     padding: 16px 24px;
     margin-bottom: 20px;
     font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+#computer-button {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+#computer-button:hover {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 @media only screen and (min-width: 768px) {
     #practice-button,
-    #play-button {
+    #play-button,
+    #computer-button {
         width: 400px;
+    }
+    
+    .menu-title {
+        font-size: 4rem;
     }
 }
 
@@ -587,4 +626,137 @@ body.spectator-mode .sidebar-buttons {
         grid-template-columns: 1fr 2fr;
         grid-auto-rows: minmax(auto, 250px);
     }
+}
+
+/* ==================== AI Game Styles ==================== */
+
+/* AI Status */
+.ai-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 18px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.ai-status i {
+    font-size: 1.2rem;
+    color: var(--accent-green);
+}
+
+.ai-status.thinking {
+    background: linear-gradient(135deg, var(--accent-orange) 0%, #f57c00 100%);
+    color: #1a1d21;
+}
+
+.ai-status.thinking i {
+    color: #1a1d21;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Difficulty Selector */
+.difficulty-selector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.difficulty-selector label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.difficulty-selector select {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+    max-width: 150px;
+}
+
+.difficulty-selector select:focus {
+    border-color: var(--accent-blue);
+}
+
+/* Player Info */
+.player-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.player-top {
+    margin-bottom: 8px;
+}
+
+.player-bottom {
+    margin-top: 8px;
+}
+
+.player-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.player-top .player-avatar {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+}
+
+.player-bottom .player-avatar {
+    background: linear-gradient(135deg, var(--accent-blue) 0%, #4a8cd9 100%);
+    color: white;
+}
+
+.player-name {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* Hint highlight */
+.hint-square {
+    box-shadow: inset 0 0 5px 5px #10b981 !important;
+}
+
+/* AI thinking overlay on board */
+#board.ai-thinking {
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+#board.ai-thinking::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    pointer-events: none;
 }

@@ -3,7 +3,7 @@ const socketio = require("socket.io");
 const path = require("path");
 const http = require("http");
 // Game Logic Functions
-const { Chess, makeMove, getResult, getLastMove, getMoveHistory, getPGN, getFenAtMove, GameTimer } = require("./game");
+const { Chess, makeMove, getResult, getLastMove, getMoveHistory, getPGN, getFenAtMove, GameTimer, ChessAI } = require("./game");
 
 const app = express();
 
@@ -21,7 +21,12 @@ app.get("/puzzle", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "puzzle.html"));
 })
 
+app.get("/board-ai", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "board-ai.html"));
+})
+
 let games = [];
+let aiGames = {}; // Store AI games by socket id
 
 // ==================== HELPER FUNCTIONS ====================
 
@@ -427,6 +432,221 @@ io.on("connection", (socket) => {
                 }
             }
         })
+    });
+    
+    // ==================== AI GAME HANDLERS ====================
+    
+    // Start new AI game
+    socket.on("ai start", (difficulty = 2) => {
+        const chess = new Chess();
+        const ai = new ChessAI();
+        ai.setDifficulty(difficulty);
+        
+        aiGames[socket.id] = {
+            chess,
+            ai,
+            difficulty
+        };
+        
+        socket.emit("ai game started", {
+            fen: chess.fen(),
+            turn: chess.turn()
+        });
+        
+        socket.emit("ai move history", getMoveHistory(chess));
+    });
+    
+    // Player makes move in AI game
+    socket.on("ai move", (move) => {
+        const game = aiGames[socket.id];
+        if (!game) {
+            socket.emit("ai error", "No game found. Please start a new game.");
+            return;
+        }
+        
+        const { chess, ai } = game;
+        
+        // Validate it's player's turn (white)
+        if (chess.turn() !== 'w') {
+            socket.emit("ai error", "Not your turn");
+            return;
+        }
+        
+        // Try to make the player's move
+        const playerMove = chess.move({
+            from: move.source,
+            to: move.target,
+            promotion: 'q'
+        });
+        
+        if (!playerMove) {
+            socket.emit("ai invalid move", chess.fen());
+            return;
+        }
+        
+        // Send updated position after player move
+        socket.emit("ai position", {
+            fen: chess.fen(),
+            source: move.source,
+            target: move.target,
+            turn: chess.turn()
+        });
+        
+        socket.emit("ai move history", getMoveHistory(chess));
+        
+        // Check if game is over after player move
+        if (chess.game_over()) {
+            socket.emit("ai gameover", getResult(chess));
+            return;
+        }
+        
+        // AI's turn - emit thinking status
+        socket.emit("ai thinking", true);
+        
+        // Slight delay to make it feel more natural
+        setTimeout(() => {
+            const aiMove = ai.getBestMove(chess);
+            
+            if (aiMove) {
+                chess.move(aiMove);
+                
+                socket.emit("ai position", {
+                    fen: chess.fen(),
+                    source: aiMove.from,
+                    target: aiMove.to,
+                    turn: chess.turn()
+                });
+                
+                socket.emit("ai move history", getMoveHistory(chess));
+                
+                // Check if game is over after AI move
+                if (chess.game_over()) {
+                    socket.emit("ai gameover", getResult(chess));
+                }
+            }
+            
+            socket.emit("ai thinking", false);
+        }, 500 + Math.random() * 500); // 500-1000ms delay
+    });
+    
+    // Change AI difficulty
+    socket.on("ai difficulty", (level) => {
+        const game = aiGames[socket.id];
+        if (game) {
+            game.ai.setDifficulty(level);
+            game.difficulty = level;
+        }
+    });
+    
+    // Undo last move pair (player + AI)
+    socket.on("ai undo", () => {
+        const game = aiGames[socket.id];
+        if (!game) return;
+        
+        const { chess } = game;
+        
+        // Undo AI's move and player's move
+        if (chess.history().length >= 2) {
+            chess.undo(); // Undo AI move
+            chess.undo(); // Undo player move
+        } else if (chess.history().length === 1) {
+            chess.undo(); // Undo only move
+        }
+        
+        const lastMove = getLastMove(chess);
+        
+        socket.emit("ai position", {
+            fen: chess.fen(),
+            source: lastMove.from,
+            target: lastMove.to,
+            turn: chess.turn()
+        });
+        
+        socket.emit("ai move history", getMoveHistory(chess));
+    });
+    
+    // Get hint for player
+    socket.on("ai hint", () => {
+        const game = aiGames[socket.id];
+        if (!game) return;
+        
+        const { chess, ai } = game;
+        
+        if (chess.turn() === 'w') {
+            const hint = ai.getHint(chess);
+            if (hint) {
+                socket.emit("ai hint", {
+                    from: hint.from,
+                    to: hint.to
+                });
+            }
+        }
+    });
+    
+    // Reset AI game
+    socket.on("ai reset", (difficulty) => {
+        const game = aiGames[socket.id];
+        if (game) {
+            game.chess.reset();
+            if (difficulty) {
+                game.ai.setDifficulty(difficulty);
+                game.difficulty = difficulty;
+            }
+            
+            socket.emit("ai game started", {
+                fen: game.chess.fen(),
+                turn: game.chess.turn()
+            });
+            
+            socket.emit("ai move history", getMoveHistory(game.chess));
+        }
+    });
+    
+    // Get PGN for AI game
+    socket.on("ai get pgn", () => {
+        const game = aiGames[socket.id];
+        if (game) {
+            socket.emit("ai pgn", getPGN(game.chess));
+        }
+    });
+    
+    // Get replay position for AI game
+    socket.on("ai get replay position", (moveIndex) => {
+        const game = aiGames[socket.id];
+        if (!game) return;
+        
+        const { chess } = game;
+        const history = chess.history({ verbose: true });
+        
+        if (moveIndex < 0) {
+            socket.emit("ai replay position", {
+                fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+                moveIndex: -1,
+                move: null,
+                totalMoves: history.length
+            });
+        } else if (moveIndex < history.length) {
+            const fen = getFenAtMove(chess, moveIndex);
+            const move = history[moveIndex];
+            
+            socket.emit("ai replay position", {
+                fen,
+                moveIndex,
+                move: {
+                    from: move.from,
+                    to: move.to,
+                    san: move.san
+                },
+                totalMoves: history.length
+            });
+        }
+    });
+    
+    // Clean up AI game on disconnect
+    socket.on("disconnect", () => {
+        if (aiGames[socket.id]) {
+            delete aiGames[socket.id];
+        }
     });
 });
 

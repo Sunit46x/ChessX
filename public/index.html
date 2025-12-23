@@ -5,17 +5,30 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="./css/styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+            integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+            crossorigin="anonymous"
+        />
         <title>Chess Game</title>
     </head>
     <body>
         <main>
             <div class="container">
                 <div class="flex-col-center menu">
-                    <!-- <a href="/puzzle">
-                        <button id="practice-button">Daily puzzle</button>
-                    </a> -->
+                    <h1 class="menu-title"><i class="fas fa-chess"></i> ChessX</h1>
+                    <p class="menu-subtitle">Choose your game mode</p>
+                    
+                    <a href="/board-ai">
+                        <button id="computer-button">
+                            <i class="fas fa-robot"></i> Play vs Computer
+                        </button>
+                    </a>
                     <a href="/board">
-                        <button id="play-button">Play vs a friend</button>
+                        <button id="play-button">
+                            <i class="fas fa-user-friends"></i> Play vs a Friend
+                        </button>
                     </a>
                 </div>
             </div>

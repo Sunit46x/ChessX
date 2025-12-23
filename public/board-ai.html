@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Chess vs Computer</title>
+        <link rel="stylesheet" href="./css/chessboard-1.0.0.min.css" />
+        <link rel="stylesheet" href="./css/styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+            integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <div class="container">
+            <div class="main-grid">
+                <!-- Left Panel: Controls & Info -->
+                <div class="left-panel">
+                    <div class="sidebar box">
+                        <img src="" alt="pawn" />
+                        <div id="turn"></div>
+                        
+                        <!-- Difficulty Selector -->
+                        <div class="difficulty-selector">
+                            <label for="difficulty">Difficulty:</label>
+                            <select id="difficulty">
+                                <option value="1">Easy</option>
+                                <option value="2" selected>Medium</option>
+                                <option value="3">Hard</option>
+                            </select>
+                        </div>
+                        
+                        <div class="sidebar-buttons">
+                            <button id="undo-button" title="Undo Move">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <button id="hint-button" title="Get Hint">
+                                <i class="fas fa-lightbulb"></i>
+                            </button>
+                            <button id="reset-button" title="New Game">
+                                <i class="fas fa-redo"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Status -->
+                    <div id="ai-status" class="box ai-status">
+                        <i class="fas fa-robot"></i>
+                        <span id="ai-status-text">Your turn</span>
+                    </div>
+                    
+                    <div class="modal box"></div>
+                </div>
+                
+                <!-- Center: Board -->
+                <div class="center-panel">
+                    <!-- Opponent (Computer) Info -->
+                    <div class="player-info player-top">
+                        <div class="player-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="player-name">Computer</div>
+                    </div>
+                    
+                    <!-- Chess Board -->
+                    <div id="board"></div>
+                    
+                    <!-- Player Info -->
+                    <div class="player-info player-bottom">
+                        <div class="player-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="player-name">You (White)</div>
+                    </div>
+                </div>
+                
+                <!-- Right Panel: Move History -->
+                <div class="right-panel">
+                    <div class="move-history-container box">
+                        <div class="move-history-header">
+                            <h3><i class="fas fa-list"></i> Move History</h3>
+                            <button id="copy-pgn" title="Copy PGN">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div id="move-history" class="move-history">
+                            <div class="no-moves">No moves yet</div>
+                        </div>
+                        
+                        <!-- Replay Controls -->
+                        <div class="replay-controls">
+                            <button id="replay-start" title="Go to start">
+                                <i class="fas fa-fast-backward"></i>
+                            </button>
+                            <button id="replay-prev" title="Previous move">
+                                <i class="fas fa-step-backward"></i>
+                            </button>
+                            <button id="replay-next" title="Next move">
+                                <i class="fas fa-step-forward"></i>
+                            </button>
+                            <button id="replay-end" title="Go to current">
+                                <i class="fas fa-fast-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+        <script src="./js/chessboard-1.0.0.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="./js/ai-game.js"></script>
+    </body>
+</html>
+
